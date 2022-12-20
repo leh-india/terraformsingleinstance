@@ -5,22 +5,12 @@ provider "aws" {
     region = "${var.aws_region}"
 }
 
-terraform {
-  required_version = "<= 1.3.14" #Forcing which version of Terraform needs to be used
-  required_providers {
-    aws = {
-      version = "<= 5.0.0" #Forcing which version of plugin needs to be used.
-      source = "hashicorp/aws"
-    }
-  }
-}
-
 resource "aws_vpc" "default" {
     cidr_block = "${var.vpc_cidr}"
     enable_dns_hostnames = true
     tags = {
         Name = "${var.vpc_name}"
-	Owner = "Sreeharsha Veerapalli"
+	Owner = "Chaitu"
 	environment = "${var.environment}"
     }
 }
@@ -102,30 +92,30 @@ resource "aws_security_group" "allow_all" {
     }
 }
 
-# data "aws_ami" "my_ami" {
-#      most_recent      = true
-#      #name_regex       = "^mavrick"
-#      owners           = ["721834156908"]
-# }
+data "aws_ami" "my_ami" {
+     most_recent      = true
+     #name_regex       = "^mavrick"
+     owners           = ["533969649696"]
+}
 
 
-# resource "aws_instance" "web-1" {
-#     ami = var.imagename
-#     #ami = "ami-0d857ff0f5fc4e03b"
-#     #ami = "${data.aws_ami.my_ami.id}"
-#     availability_zone = "us-east-1a"
-#     instance_type = "t2.micro"
-#     key_name = "LaptopKey"
-#     subnet_id = "${aws_subnet.subnet1-public.id}"
-#     vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
-#     associate_public_ip_address = true	
-#     tags = {
-#         Name = "Server-1"
-#         Env = "Prod"
-#         Owner = "Sree"
-# 	CostCenter = "ABCD"
-#     }
-# }
+resource "aws_instance" "web-1" {
+    ami = var.imagename
+    #ami = "ami-0d857ff0f5fc4e03b"
+    #ami = "${data.aws_ami.my_ami.id}"
+    availability_zone = "us-east-1a"
+    instance_type = "t2.micro"
+    key_name = "chaitu-aws-NV"
+    subnet_id = "${aws_subnet.subnet1-public.id}"
+    vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
+    associate_public_ip_address = true	
+    tags = {
+        Name = "Server-1"
+        Env = "Prod"
+        Owner = "Chaitu"
+	CostCenter = "ABCD"
+    }
+}
 
 ##output "ami_id" {
 #  value = "${data.aws_ami.my_ami.id}"
